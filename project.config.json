@@ -1,0 +1,85 @@
+{
+	"miniprogramRoot": "dist/",
+	"projectname": "%E6%9E%81%E5%AE%A2%E6%B5%AA%E6%BD%AE",
+	"description": "",
+	"appid": "wxa61bda5c25bf1cfd",
+	"setting": {
+		"urlCheck": true,
+		"es6": false,
+		"postcss": false,
+		"preloadBackgroundData": false,
+		"minified": false,
+		"newFeature": true,
+		"coverView": true,
+		"autoAudits": false,
+		"showShadowRootInWxmlPanel": true,
+		"scopeDataCheck": false,
+		"checkInvalidKey": true,
+		"checkSiteMap": false,
+		"uploadWithSourceMap": true,
+		"babelSetting": {
+			"ignore": [],
+			"disablePlugins": [],
+			"outputPath": ""
+		},
+		"useCompilerModule": true,
+		"userConfirmedUseCompilerModuleSwitch": false
+	},
+	"compileType": "miniprogram",
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
+	"condition": {
+		"search": {
+			"current": -1,
+			"list": []
+		},
+		"conversation": {
+			"current": -1,
+			"list": []
+		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
+		"game": {
+			"list": []
+		},
+		"gamePlugin": {
+			"current": -1,
+			"list": []
+		},
+		"miniprogram": {
+			"current": -1,
+			"list": [
+				{
+					"id": -1,
+					"name": "我的",
+					"pathName": "pages/personal/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "更新日志",
+					"pathName": "pages/log/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 2,
+					"name": "话题",
+					"pathName": "pages/topic/index",
+					"query": "topicId=695110&__key_=15964555346541",
+					"scene": null
+				},
+				{
+					"id": 3,
+					"name": "节点列表",
+					"pathName": "pages/nodes/index",
+					"query": "",
+					"scene": null
+				}
+			]
+		}
+	}
+}
