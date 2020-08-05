@@ -20,11 +20,12 @@
         <rich-text :nodes="topic.content_rendered"></rich-text>
       </view>
     </view>
-    <view class='reply-list-wrapper bg-white' v-if='replies && replies.length'>
+
+    <view class='reply-list-wrapper bg-white' v-if='replies.length'>
       <view class='total-wrapper'>共{{ total }}条回复</view>
       <view class='pagination-wrapper border-bottom flex f-jc-sb'>
         <view class='pagination-count-wrapper'>第{{ page + 1 }}页</view>
-        <view class='pagination-goto-wrapper flex'>
+        <view class='pagination-goto-wrapper flex' v-if='totalPage > 1'>
           <view class='pagination-goto' @tap='prev'>上一页</view>
           <view class='pagination-goto'></view>
           <view class='pagination-goto' @tap='next'>下一页</view>
@@ -51,9 +52,10 @@
             <view class='count-wrapper bg-grey'>{{ reply.rank }}</view>
         </view>
       </view>
+
       <view class='pagination-wrapper flex f-jc-sb'>
         <view class='pagination-count-wrapper'>第{{ page + 1 }}页</view>
-        <view class='pagination-goto-wrapper flex'>
+        <view class='pagination-goto-wrapper flex' v-if='totalPage > 1'>
           <view class='pagination-goto' @tap='prev'>上一页</view>
           <view class='pagination-goto'></view>
           <view class='pagination-goto' @tap='next'>下一页</view>
@@ -102,13 +104,33 @@ export default {
         this.page = this.page + 1;
       }
     },
-    async getTopic (topicId) {
+
+    getTopic (topicId) {
+      let that = this;
+      wx.getStorage({
+        key: `topic_${topicId}`,
+        success (res) {
+          console.log('缓存 topic');
+          that.topic = res.data;
+        },
+        fail () {
+          console.log('接口 topic');
+          that.fetchTopic(topicId);
+        }
+      })
+    },
+
+    async fetchTopic (topicId) {
       try {
         let res = await Taro.request({ url: `https://www.v2ex.com/api/topics/show.json?id=${topicId}` });
+        res.data[0].content_rendered = res.data[0].content_rendered === '<br/>\n' ? '<p>如题</p>' : res.data[0].content_rendered;
         res.data[0].content_rendered = res.data[0].content_rendered.replace(/<img/gi, "<img class='rich-img'");
         res.data[0].last_modified_str = this.$utils.time.format(res.data[0].last_modified);
         this.topic = res.data[0];
+
         console.log(this.topic);
+
+        wx.setStorage({ key: `topic_${topicId}`, data: res.data[0] });
       } catch (e) {
       }
     },

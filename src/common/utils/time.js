@@ -25,7 +25,7 @@ function format (time) {
     result = ` ${hour}小时 ${paddingZero(min)} 分钟 ${paddingZero(sec)} 秒前`;
   } else {
     day = parseInt(diff/86400);
-    result = `${day}天前`;
+    result = ` ${day} 天前`;
   }
 
   return result;

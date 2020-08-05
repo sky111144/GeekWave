@@ -3,19 +3,19 @@
     <view class='list-wrapper'>
       <view class='item-wrapper flex f-jc-sb' v-for='(item, index) in list'  v-if='list.length !== 0'>
         <view class='flex'>
-          <view class='left-wrapper'>
+          <view class='left-wrapper' @tap='gotoUser(item.member.username)'>
             <image class='avatar' :src='item.member.avatar_mini' />
           </view>
           <view class='middle-wrapper'>
             <view class='header-wrapper flex f-ai-c'>
-              <view class='node-wrapper'>{{ item.node.title }}</view>
-              <view class='user-wrapper'>{{ item.member.username }}</view>
+              <view class='node-wrapper' @tap="gotoTopic(item)">{{ item.node.title }}</view>
+              <view class='user-wrapper' @tap='gotoUser(item.member.username)'>{{ item.member.username }}</view>
             </view>
             <view class='content-wrapper' @tap="gotoTopic(item)">{{ item.title }}</view>
             <view class='time-wrapper flex'>
               <view class='last-reply-wrapper'>{{ item.last_touched_str }}</view>
               <view class='last-reply-wrapper'>最后回复来自</view>
-              <view class='user-wrapper'>{{ item.last_reply_by }}</view>
+              <view class='user-wrapper' @tap='gotoUser(item.last_reply_by)'>{{ item.last_reply_by }}</view>
             </view>
           </view>
         </view>
@@ -23,7 +23,7 @@
           <view class='count-wrapper bg-brown'>{{ item.replies }}</view>
         </view>
       </view>
-      <view class='loading-wrapper' v-if='list.length === 0'></view>
+      <view class='loading-wrapper flex f-jc-c f-ai-c' v-if='list.length === 0'>加载中~</view>
     </view>
   </view>
 </template>
@@ -43,6 +43,10 @@ export default {
     this.getTopicList(page.options.nodeId);
   },
   methods: {
+    gotoUser (username) {
+      Taro.navigateTo({ url: `/pages/user/index?username=${username}` });
+    },
+
     gotoTopic (item) {
       Taro.navigateTo({ url: `/pages/topic/index?topicId=${item.id}` });
     },

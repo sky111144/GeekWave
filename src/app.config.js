@@ -5,7 +5,8 @@ export default {
     'pages/nodes/index',
     'pages/node/index',
     'pages/topic/index',
-    'pages/personal/index'
+    'pages/personal/index',
+    'pages/user/index',
   ],
   window: {
     backgroundTextStyle: 'light',

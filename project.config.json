@@ -22,7 +22,7 @@
 			"disablePlugins": [],
 			"outputPath": ""
 		},
-		"useCompilerModule": true,
+		"useCompilerModule": false,
 		"userConfirmedUseCompilerModuleSwitch": false
 	},
 	"compileType": "miniprogram",
@@ -69,7 +69,7 @@
 					"id": 2,
 					"name": "话题",
 					"pathName": "pages/topic/index",
-					"query": "topicId=695110&__key_=15964555346541",
+					"query": "topicId=695447&__key_=15966050748082",
 					"scene": null
 				},
 				{
@@ -77,6 +77,13 @@
 					"name": "节点列表",
 					"pathName": "pages/nodes/index",
 					"query": "",
+					"scene": null
+				},
+				{
+					"id": 4,
+					"name": "个人主页",
+					"pathName": "pages/user/index",
+					"query": "username=Livid",
 					"scene": null
 				}
 			]

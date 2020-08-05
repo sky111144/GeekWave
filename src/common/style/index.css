@@ -2,12 +2,40 @@ page {
   background-color: #e2e2e2;
 }
 
+.font-12 {
+  font-size: 12Px;
+}
+
+.m-l-xs {
+  margin-left: 10px;
+}
+
+.m-r-xs {
+  margin-right: 10px;
+}
+
+.m-b-xs {
+  margin-bottom: 10px;
+}
+
+.m-t-xs {
+  margin-top: 10px;
+}
+
 .p-l-xs {
   padding-left: 10px;
 }
 
 .p-r-xs {
   padding-right: 10px;
+}
+
+.p-b-xs {
+  padding-bottom: 10px;
+}
+
+.p-t-xs {
+  padding-top: 10px;
 }
 
 
@@ -31,6 +59,10 @@ page {
   align-items: center;
 }
 
+.f-jc-c {
+  justify-content: center;
+}
+
 .f-jc-fs {
   justify-content: flex-start;
 }
@@ -43,8 +75,22 @@ page {
   color: #aaa;
 }
 
+.white {
+  color: #fff;
+}
+
+.b-r-xs {
+  border-radius: 10px;
+}
+
+.b-r-md {
+  border-radius: 20px;
+}
+
+
 .loading-wrapper {
-  height: 1500px;
+  height: 1050px;
+  border-radius: 10px;
   background-color: #fff;
 }
 
@@ -96,6 +142,11 @@ page {
   height: 30Px;
   border-radius: 5Px;
   background: #fff;
+}
+
+.avatar.large {
+  width: 60Px;
+  height: 60Px;
 }
 
 .bg-grey {

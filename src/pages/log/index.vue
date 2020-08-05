@@ -1,8 +1,19 @@
 <template>
   <view class='log-wrapper'>
     <view class='log-item-wrapper flex'>
-      2020-08-04：v2ex 首页、节点列表、主题详情功能上线
-      <view class="grey">（v1.0.0）</view></view>
+      2020-08-05：个人详情功能上线
+      <view class="grey">（v1.0.2）</view>
+    </view>
+
+    <view class='log-item-wrapper flex'>
+      2020-08-04：节点列表、主题列表功能上线
+      <view class="grey">（v1.0.1）</view>
+    </view>
+
+    <view class='log-item-wrapper flex'>
+      2020-08-03：首页、主题详情功能上线
+      <view class="grey">（v1.0.0）</view>
+    </view>
   </view>
 </template>
 
