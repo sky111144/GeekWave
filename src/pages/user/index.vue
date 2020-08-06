@@ -166,7 +166,7 @@ export default {
 }
 
 .user-info-wrapper {
-  min-height: 100px;
+  min-height: 80px;
   border-radius: 10px;
   margin-bottom: 10px;
   padding: 10px;

@@ -43,6 +43,7 @@ export default {
   name: 'Nodes',
   data () {
       return {
+          backup: [],
           nodes: [],
           page: 0,
           pageSize: 20,
@@ -61,6 +62,7 @@ export default {
           success (res) {
             that.totalPage = parseInt(res.data.length/that.pageSize);
             that.nodes = that.$utils.array.matrix(res.data, that.pageSize);
+            that.backup = that.$utils.array.matrix(res.data, that.pageSize);
           },
           fail () {
             that.getNodes();
@@ -73,19 +75,19 @@ export default {
       },
 
       search () {
-        let result = [[]];
+        let result = [];
         let total = 0;
-        this.nodes.forEach((arr, i) => {
+        this.backup.forEach((arr, i) => {
           arr.forEach((item, j) => {
-            if (item.title.indexOf(this.query) > -1) {
+            if (item.title.toLocaleLowerCase().indexOf(this.query.toLocaleLowerCase()) > -1) {
               total += 1;
-              result[0].push(item);
+              result.push(item);
             };
           });
         });
 
         this.totalPage = parseInt(total/this.pageSize);
-        this.nodes = result;
+        this.nodes = this.$utils.array.matrix(result, this.pageSize);
       },
 
       prev () {
@@ -104,10 +106,11 @@ export default {
           this.totalPage = parseInt(res.data.length/this.pageSize);
 
           this.nodes = this.$utils.array.matrix(res.data, this.pageSize);
+          this.backup = this.$utils.array.matrix(res.data, this.pageSize);
           wx.setStorage({ key: 'nodes', data: res.data });
         } catch (e) {
-          console.log(e);
           this.nodes = [];
+          this.backup = [];
         }
       },
 

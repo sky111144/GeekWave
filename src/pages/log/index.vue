@@ -1,17 +1,17 @@
 <template>
   <view class='log-wrapper'>
     <view class='log-item-wrapper flex'>
-      2020-08-05：个人详情功能上线
+      2020-08-05：支持个人详情功能
       <view class="grey">（v1.0.2）</view>
     </view>
 
     <view class='log-item-wrapper flex'>
-      2020-08-04：节点列表、主题列表功能上线
+      2020-08-04：支持节点列表、主题列表功能
       <view class="grey">（v1.0.1）</view>
     </view>
 
     <view class='log-item-wrapper flex'>
-      2020-08-03：首页、主题详情功能上线
+      2020-08-03：支持首页、主题详情功能
       <view class="grey">（v1.0.0）</view>
     </view>
   </view>

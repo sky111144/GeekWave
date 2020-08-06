@@ -145,8 +145,8 @@ export default {
           ]
         }
       ],
-      curType: 8,
-      curNode: 'hot'
+      curType: 0,
+      curNode: 300
     }
   },
 
@@ -158,7 +158,7 @@ export default {
   },
 
   mounted () {
-    this.getTopicList(this.nodes[8].nodes[0]);
+    this.getTopicList(this.nodes[0].nodes[0]);
   },
   methods: {
     gotoType (type) {
