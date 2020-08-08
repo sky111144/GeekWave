@@ -87,6 +87,23 @@ export default {
     this.getTopic(page.options.topicId);
     this.getReplies(page.options.topicId, 1, 20);
   },
+
+  onShareAppMessage (res) {
+    let share = {
+      title: 'IT 新鲜事儿',
+      path: '/pages/topic/index'
+    };
+
+    if (this.topic.title) {
+      share.title = this.topic.title;
+    }
+
+    if (this.topic.id) {
+      share.path = `/pages/topic/index?topicId=${this.topic.id}`;
+    }
+    return share;
+  },
+
   methods: {
     gotoHome () {
       Taro.switchTab({ url: '/pages/home/index' });

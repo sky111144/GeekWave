@@ -7,7 +7,7 @@
         </view>
       </view>
       <view class='item-wrapper flex f-jc-fs f-fw-w'>
-        <view v-for='(node, index) in nodes[curType].nodes' class='node-tag-wrapper' :class='[node.id === curNode ? "actived" : "unactived"]' @tap='gotoNode(node)'>
+        <view v-for='(node, index) in nodes[curType].nodes' class='node-tag-wrapper' :class='[node.id === curNode ? "actived" : "unactived"]' @tap='getNode(node)'>
           {{ node.name }}
         </view>
       </view>
@@ -18,7 +18,7 @@
           </view>
           <view class='middle-wrapper'>
             <view class='header-wrapper flex'>
-              <view class='node-wrapper'>{{ item.node.title }}</view>
+              <view class='node-wrapper' @tap='gotoNode(item.node.id)'>{{ item.node.title }}</view>
               <view class='user-wrapper' @tap='gotoUser(item.member.username)'>{{ item.member.username }}</view>
             </view>
             <view class='content-wrapper' @tap="gotoTopic(item)">{{ item.title }}</view>
@@ -166,11 +166,13 @@ export default {
       this.list = [];
       this.getTopicList(type.nodes[0]);
     },
-    gotoNode (node) {
+    getNode (node) {
       this.list = [];
       this.getTopicList(node);
     },
-
+    gotoNode (nodeId) {
+      Taro.navigateTo({ url: `/pages/node/index?nodeId=${nodeId}` });
+    },
     gotoUser (username) {
       Taro.navigateTo({ url: `/pages/user/index?username=${username}` });
     },
