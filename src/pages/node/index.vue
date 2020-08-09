@@ -38,30 +38,43 @@ export default {
       list: []
     }
   },
+
   mounted () {
     let page = Taro.getCurrentPages().slice(-1)[0] || { options: {} };
-    this.getTopicList(page.options.nodeId);
+    this.getTopics(page.options.nodeId);
   },
+
   methods: {
     gotoUser (username) {
-      Taro.navigateTo({ url: `/pages/user/index?username=${username}` });
+      this.$utils.router.gotoUser(username);
     },
-
     gotoTopic (item) {
-      Taro.navigateTo({ url: `/pages/topic/index?topicId=${item.id}` });
+      this.$utils.router.gotoTopic(item);
     },
 
-    async getTopicList (nodeId) {
-      try {
-        const res = await Taro.request({ url: `https://www.v2ex.com/api/topics/show.json?node_id=${nodeId}` });
+    getTopics (nodeId) {
+      this.$utils.api.getTopicsByNodeId(nodeId)
+      .then((res) => {
+        this.list = res.data;
+      })
+      .catch(() => {
+        this.fetchTopics(nodeId);
+      });
+    },
 
+    fetchTopics (nodeId) {
+      this.$utils.api.fetchTopicsByNodeId(nodeId)
+      .then((res) => {
         this.list = res.data.map((item, index) => {
-          item.last_touched_str = this.$utils.time.format(item.last_touched);
+          if (item.last_touched) {
+            item.last_touched_str = this.$utils.time.format(item.last_touched);
+          }
           return item;
         });
-      } catch (e) {
+      })
+      .catch((err) => {
         this.list = [];
-      }
+      });
     }
   }
 }

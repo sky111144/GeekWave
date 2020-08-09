@@ -1,3 +1,3 @@
 export default {
-  navigationBarTitleText: '贴子详情'
+  navigationBarTitleText: '话题详情'
 }

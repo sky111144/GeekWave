@@ -6,9 +6,9 @@
         <view class='pagination-count-wrapper flex f-ai-c'>第{{ page + 1 }}页</view>
         <view class='pagination-goto-wrapper flex'>
           <view class='pagination-goto flex f-ai-c' @tap='prev'>上一页</view>
-          <view class='pagination-goto flex f-ai-c' @tap='init'>重置</view>
+          <view class='pagination-goto flex f-ai-c' @tap='getNodes'>重置</view>
           <view class='pagination-goto'>
-            <input style='width:80px' type='text' placeholder='Search in this' @input='input' :value='query' />
+            <input style='width:80px' type='text' placeholder='Search in this' v-model='query' />
           </view>
           <view class='pagination-goto flex f-ai-c' @tap='search'>搜索</view>
           <view class='pagination-goto flex f-ai-c' @tap='next'>下一页</view>
@@ -31,7 +31,7 @@
         <view class='pagination-count-wrapper'>共{{ totalPage }}页</view>
       </view>
 
-      <view class='loading-wrapper' v-if='nodes.length === 0'></view>
+      <view class='loading-wrapper flex f-jc-c f-ai-c' v-if='nodes.length === 0'>加载中~</view>
     </view>
   </view>
 </template>
@@ -43,6 +43,8 @@ export default {
   name: 'Nodes',
   data () {
       return {
+          type: wx.getStorageSync('data_type') || 'cnode',
+          query: '',
           backup: [],
           nodes: [],
           page: 0,
@@ -50,28 +52,31 @@ export default {
           totalPage: 0
       }
   },
+
   mounted () {
-      this.init();
+      this.getNodes();
+  },
+
+  onShow () {
+    let curType = wx.getStorageSync('data_type');
+    if (this.type !== curType) {
+      this.type = curType;
+      this.getNodes();
+    }
   },
   methods: {
-      init () {
-        let that = this;
-        this.query = '';
-        wx.getStorage({
-          key: 'nodes',
-          success (res) {
-            that.totalPage = parseInt(res.data.length/that.pageSize);
-            that.nodes = that.$utils.array.matrix(res.data, that.pageSize);
-            that.backup = that.$utils.array.matrix(res.data, that.pageSize);
-          },
-          fail () {
-            that.getNodes();
-          }
-        });
-      },
-
       input (e) {
         this.query = e.detail.value;
+      },
+      prev () {
+        if (this.page > 0) {
+          this.page -= 1;
+        }
+      },
+      next () {
+        if (this.page < this.totalPage - 1) {
+          this.page += 1;
+        }
       },
 
       search () {
@@ -86,36 +91,38 @@ export default {
           });
         });
 
-        this.totalPage = parseInt(total/this.pageSize);
+        this.totalPage = Math.ceil(total/this.pageSize);
         this.nodes = this.$utils.array.matrix(result, this.pageSize);
       },
 
-      prev () {
-        if (this.page > 0) {
-          this.page -= 1;
-        }
-      },
-      next () {
-        if (this.page < this.totalPage - 1) {
-          this.page += 1;
-        }
-      },
-      async getNodes () {
-        try {
-          let res = await Taro.request({ url: 'https://www.v2ex.com/api/nodes/all.json' });
-          this.totalPage = parseInt(res.data.length/this.pageSize);
-
+      getNodes () {
+        this.query = '';
+        this.$utils.api.getNodes()
+        .then((res) => {
+          this.totalPage = Math.ceil(res.data.length/this.pageSize);
           this.nodes = this.$utils.array.matrix(res.data, this.pageSize);
           this.backup = this.$utils.array.matrix(res.data, this.pageSize);
-          wx.setStorage({ key: 'nodes', data: res.data });
-        } catch (e) {
+        })
+        .catch(() => {
+          this.fetchNodes();
+        });
+      },
+
+      fetchNodes () {
+        this.$utils.api.fetchNodes()
+        .then((res) => {
+          this.totalPage = Math.ceil(res.data.length/this.pageSize);
+          this.nodes = this.$utils.array.matrix(res.data, this.pageSize);
+          this.backup = this.$utils.array.matrix(res.data, this.pageSize);
+        })
+        .catch((err) => {
           this.nodes = [];
           this.backup = [];
-        }
+        })
       },
 
       gotoNode (nodeId) {
-        Taro.navigateTo({ url: `/pages/node/index?nodeId=${nodeId}` });
+        this.$utils.router.gotoNode(nodeId);
       }
   }
 };

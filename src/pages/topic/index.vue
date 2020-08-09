@@ -1,9 +1,9 @@
 <template>
   <view class='topic-wrapper'>
-    <view class='topic-header-wrapper bg-white' v-if='topic.node'>
+    <view class='topic-header-wrapper bg-white' v-if='topic && topic.member'>
       <view class='topic-info flex f-jc-sb'>
-        <view class='topic-node flex'>
-          <view class='topic-node-name' @tap='gotoHome'>V2ex</view>
+        <view class='topic-node flex' v-if='topic.node'>
+          <view class='topic-node-name' @tap='gotoHome'>首页</view>
           <view class='topic-node-name' @tap='gotoNode(topic.node.id)'>&nbsp/&nbsp{{ topic.node.title }}</view>
         </view>
         <view class='user-avatar'>
@@ -82,7 +82,7 @@ export default {
     }
   },
 
-  created () {
+  mounted () {
     let page = Taro.getCurrentPages().slice(-1)[0] || { options: {} };
     this.getTopic(page.options.topicId);
     this.getReplies(page.options.topicId, 1, 20);
@@ -106,11 +106,12 @@ export default {
 
   methods: {
     gotoHome () {
-      Taro.switchTab({ url: '/pages/home/index' });
+      this.$utils.router.gotoHome();
     },
     gotoNode (nodeId) {
-      Taro.navigateTo({ url: `/pages/node/index?nodeId=${nodeId}`})
+      this.$utils.router.gotoNode(nodeId);
     },
+
     prev () {
       if (this.page > 0) {
         this.page = this.page - 1;
@@ -123,59 +124,53 @@ export default {
     },
 
     getTopic (topicId) {
-      let that = this;
-      wx.getStorage({
-        key: `topic_${topicId}`,
-        success (res) {
-          console.log('缓存 topic');
-          that.topic = res.data;
-        },
-        fail () {
-          console.log('接口 topic');
-          that.fetchTopic(topicId);
-        }
-      })
-    },
-
-    async fetchTopic (topicId) {
-      try {
-        let res = await Taro.request({ url: `https://www.v2ex.com/api/topics/show.json?id=${topicId}` });
+      this.$utils.api.getTopic(topicId)
+      .then((res) => {
         res.data[0].content_rendered = res.data[0].content_rendered === '<br/>\n' ? '<p>如题</p>' : res.data[0].content_rendered;
         res.data[0].content_rendered = res.data[0].content_rendered.replace(/<img/gi, "<img class='rich-img'");
-        res.data[0].last_modified_str = this.$utils.time.format(res.data[0].last_modified);
+
         this.topic = res.data[0];
-
-        console.log(this.topic);
-
-        wx.setStorage({ key: `topic_${topicId}`, data: res.data[0] });
-      } catch (e) {
-      }
+      })
+      .catch(() => {
+        this.fetchTopic(topicId);
+      });
     },
-    async getReplies (topicId, page, pageSize) {
-      try {
-        let res = await Taro.request({ url: `https://www.v2ex.com/api/replies/show.json?topic_id=${topicId}&page=${page}&page_size=${pageSize}` });
+
+    fetchTopic (topicId) {
+      this.$utils.api.fetchTopic(topicId)
+      .then((res) => {
+        res.data[0].content_rendered = res.data[0].content_rendered === '<br/>\n' ? '<p>如题</p>' : res.data[0].content_rendered;
+        res.data[0].content_rendered = res.data[0].content_rendered.replace(/<img/gi, "<img class='rich-img'");
+        if (res.data[0].last_modified) {
+          res.data[0].last_modified_str = this.$utils.time.format(res.data[0].last_modified);
+        }
+        this.topic = res.data[0];
+      })
+      .catch((err) => {
+        this.topic = {};
+      });
+    },
+
+    getReplies (topicId, page, pageSize) {
+      this.$utils.api.fetchReplies(topicId, page, pageSize)
+      .then((res) => {
         res.data = res.data.map((item, index) => {
           item.rank = index + 1;
-          item.last_modified_str = this.$utils.time.format(item.last_modified);
+          if (item.last_modified) {
+            item.last_modified_str = this.$utils.time.format(item.last_modified);
+          }
           item.content_rendered = item.content_rendered.replace(/http\:/gi, 'https:');
           item.content_rendered = item.content_rendered.replace(/src\=\"\/\//gi, 'src="https://');
           return item;
         });
 
-        let len = res.data.length/this.pageSize;
-        let matrix = [];
-        for (let i = 0; i < len; i++) {
-          matrix[i] = res.data.slice(this.pageSize * i, this.pageSize * (i + 1));
-        }
-
         this.total = res.data.length;
         this.totalPage = Math.ceil(res.data.length/this.pageSize);
-
-        this.replies = matrix;
-        console.log(this.replies);
-      } catch (e) {
-        console.log(e);
-      }
+        this.replies = this.$utils.array.matrix(res.data, this.pageSize);
+      })
+      .catch((err) => {
+        this.replies = [];
+      });
     }
   }
 };

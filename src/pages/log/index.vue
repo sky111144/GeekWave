@@ -1,6 +1,11 @@
 <template>
   <view class='log-wrapper'>
     <view class='log-item-wrapper flex'>
+      2020-08-09：支持 CNode 数据源。
+      <view class="grey">（v1.0.4）</view>
+    </view>
+
+    <view class='log-item-wrapper flex'>
       2020-08-07：调整状态栏颜色；开放主题详情页面分享好友功能。
       <view class="grey">（v1.0.4）</view>
     </view>

@@ -1,6 +1,7 @@
 <template>
   <view class='personal-wrapper'>
     <view class='panel-wrapper' @tap="gotoLog">更新日志</view>
+    <view class='panel-wrapper' @tap="changeOrigin">数据源（{{type}}）</view>
   </view>
 </template>
 
@@ -9,13 +10,28 @@ import Taro from '@tarojs/taro';
 
 export default {
   name: 'Personal',
-  components: {
+  data () {
+    return {
+      type: wx.getStorageSync('data_type') || 'cnode'
+    };
   },
   methods: {
       gotoLog () {
-          // 跳转到目的页面，打开新页面
-          Taro.navigateTo({
-            url: '/pages/log/index'
+          this.$utils.router.gotoLog();
+      },
+
+      changeOrigin () {
+          if (this.type === 'cnode') {
+            wx.setStorageSync('data_type', 'v2ex');
+            this.type = 'v2ex';
+          } else if (this.type === 'v2ex') {
+            wx.setStorageSync('data_type', 'cnode');
+            this.type = 'cnode';
+          }
+          Taro.startPullDownRefresh({
+            complete: function () {
+              Taro.stopPullDownRefresh();
+            }
           });
       }
   }
@@ -35,6 +51,7 @@ export default {
   height: 30Px;
   line-height: 30Px;
   padding: 20px;
+  margin-bottom: 20px;
   width: 100%;
   text-align: left;
   color: #000;

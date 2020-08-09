@@ -67,9 +67,9 @@
 				},
 				{
 					"id": 2,
-					"name": "话题",
+					"name": "话题详情",
 					"pathName": "pages/topic/index",
-					"query": "topicId=695447&__key_=15966050748082",
+					"query": "topicId=5f28224bf0739b0e62d1364a&__key_=15969669369381",
 					"scene": null
 				},
 				{
@@ -83,7 +83,7 @@
 					"id": 4,
 					"name": "个人主页",
 					"pathName": "pages/user/index",
-					"query": "username=Livid",
+					"query": "username=genaller&__key_=15969710730451",
 					"scene": null
 				}
 			]
