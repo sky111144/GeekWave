@@ -46,7 +46,7 @@ export default {
   name: 'Home',
   data () {
     return {
-      type: wx.getStorageSync('data_type') || 'cnode',
+      type: wx.getStorageSync('data_type') || 'v2ex',
       list: [],
       nodes: getData(),
       curType: 0,
@@ -95,8 +95,15 @@ export default {
       this.getTopics(node);
     },
     getTopics (node) {
+      this.list = [];
       this.$utils.api.getTopicsInHome(node)
       .then((res) => {
+        res.data.forEach((item) => {
+          if (item.last_touched) {
+            item.last_touched_str = this.$utils.time.format(item.last_touched);
+          }
+        });
+
         this.curNode = node.id;
         this.list = res.data;
       })

@@ -26,37 +26,37 @@ function currifyCacheMethod (timeKey, dataKey, cacheTime) {
 }
 
 function getTopic (topicId) {
-  let type = wx.getStorageSync('data_type') || 'cnode';
+  let type = wx.getStorageSync('data_type') || 'v2ex';
   let handleTopic = currifyCacheMethod(`${type}_topic_time_${topicId}`, `${type}_topic_${topicId}`, 10000000);
   return handleTopic();
 }
 
 function getTopicsByNodeId (nodeId) {
-  let type = wx.getStorageSync('data_type') || 'cnode';
+  let type = wx.getStorageSync('data_type') || 'v2ex';
   let handleTopicByNodeId = currifyCacheMethod(`${type}_topics_time_${nodeId}`, `${type}_topics_${nodeId}`, 10000000);
   return handleTopicByNodeId();
 }
 
 function getTopicsByUsername (username) {
-  let type = wx.getStorageSync('data_type') || 'cnode';
+  let type = wx.getStorageSync('data_type') || 'v2ex';
   let handleTopicsByUsername = currifyCacheMethod(`${type}_user_time_${username}`, `${type}_user_${username}`, 10000000)
   return handleTopicsByUsername();
 }
 
 function getUserInfo (username) {
-  let type = wx.getStorageSync('data_type') || 'cnode';
+  let type = wx.getStorageSync('data_type') || 'v2ex';
   let handleUserInfo = currifyCacheMethod(`${type}_userinfo_time_${username}`, `${type}_userinfo_${username}`, 10000000)
   return handleUserInfo();
 }
 
 function getNodes () {
-  let type = wx.getStorageSync('data_type') || 'cnode';
+  let type = wx.getStorageSync('data_type') || 'v2ex';
   let handleNodes = currifyCacheMethod(`${type}_nodes_time`, `${type}_nodes`, 10000000);
   return handleNodes();
 }
 
 function getTopicsInHome (node) {
-  let type = wx.getStorageSync('data_type') || 'cnode';
+  let type = wx.getStorageSync('data_type') || 'v2ex';
   let handleTopicsInHome = currifyCacheMethod(`${type}_topics_time_${node.id}`, `${type}_topics_${node.id}`, node.cache);
   return handleTopicsInHome();
 }
@@ -81,7 +81,7 @@ function currifyRequestMethod ({ url, handle, timeKey, dataKey }) {
 }
 
 function fetchTopic (topicId) {
-  let type = wx.getStorageSync('data_type') || 'cnode';
+  let type = wx.getStorageSync('data_type') || 'v2ex';
   let requestTopic = currifyRequestMethod({
     url:     adapter.filterTopicURL(topicId),
     handle:  adapter.filterTopicData,
@@ -92,7 +92,7 @@ function fetchTopic (topicId) {
 }
 
 function fetchReplies (topicId, page, pageSize) {
-  let type = wx.getStorageSync('data_type') || 'cnode';
+  let type = wx.getStorageSync('data_type') || 'v2ex';
   let requestReplies = currifyRequestMethod({
     url: adapter.filterRepliesURL(topicId, page, pageSize),
     handle: adapter.filterRepliesData,
@@ -103,7 +103,7 @@ function fetchReplies (topicId, page, pageSize) {
 }
 
 function fetchTopicsByNodeId (nodeId) {
-  let type = wx.getStorageSync('data_type') || 'cnode';
+  let type = wx.getStorageSync('data_type') || 'v2ex';
   let requestTopicsByNodeId = currifyRequestMethod({
     url: adapter.filterNodeURL(nodeId),
     handle: adapter.filterNodeData,
@@ -114,7 +114,7 @@ function fetchTopicsByNodeId (nodeId) {
 }
 
 function fetchTopicsByUsername (username) {
-  let type = wx.getStorageSync('data_type') || 'cnode';
+  let type = wx.getStorageSync('data_type') || 'v2ex';
   let requestTopicsByUsername = currifyRequestMethod({
     url: adapter.filterRepliesByUsernameURL(username),
     handle: adapter.filterRepliesByUsernameData,
@@ -125,7 +125,7 @@ function fetchTopicsByUsername (username) {
 }
 
 function fetchUserInfo (username) {
-  let type = wx.getStorageSync('data_type') || 'cnode';
+  let type = wx.getStorageSync('data_type') || 'v2ex';
   let requestUserInfo = currifyRequestMethod({
     url: adapter.filterUserURL(username),
     handle: adapter.filterUserData,
@@ -136,7 +136,7 @@ function fetchUserInfo (username) {
 }
 
 function fetchTopicsInHome (node) {
-  let type = wx.getStorageSync('data_type') || 'cnode';
+  let type = wx.getStorageSync('data_type') || 'v2ex';
   let requestTopicsInHome = currifyRequestMethod({
     url: adapter.filterHomeURL(node),
     handle: adapter.filterHomeData,
@@ -148,7 +148,7 @@ function fetchTopicsInHome (node) {
 
 
 function fetchNodes () {
-  let type = wx.getStorageSync('data_type') || 'cnode';
+  let type = wx.getStorageSync('data_type') || 'v2ex';
 
   if (type === 'cnode') {
     return new Promise((resolve, reject) => {

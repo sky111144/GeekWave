@@ -55,7 +55,12 @@ export default {
     getTopics (nodeId) {
       this.$utils.api.getTopicsByNodeId(nodeId)
       .then((res) => {
-        this.list = res.data;
+        this.list = res.data.map((item, index) => {
+          if (item.last_touched) {
+            item.last_touched_str = this.$utils.time.format(item.last_touched);
+          }
+          return item;
+        });
       })
       .catch(() => {
         this.fetchTopics(nodeId);

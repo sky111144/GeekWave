@@ -6,7 +6,7 @@ let tabMap = {
 };
 
 function filterTopicURL(topicId) {
-  let type = wx.getStorageSync('data_type') || 'cnode';
+  let type = wx.getStorageSync('data_type') || 'v2ex';
   let map = {
     v2ex: `https://www.v2ex.com/api/topics/show.json?id=${topicId}`,
     cnode: `https://cnodejs.org/api/v1/topic/${topicId}`
@@ -16,7 +16,7 @@ function filterTopicURL(topicId) {
 }
 
 function filterTopicData (res) {
-  let type = wx.getStorageSync('data_type') || 'cnode';
+  let type = wx.getStorageSync('data_type') || 'v2ex';
 
   if (type === 'cnode') {
     res.data.data.member = res.data.data.author;
@@ -38,7 +38,7 @@ function filterTopicData (res) {
 }
 
 function filterRepliesURL (topicId, page, pageSize) {
-  let type = wx.getStorageSync('data_type') || 'cnode';
+  let type = wx.getStorageSync('data_type') || 'v2ex';
   let map = {
     v2ex: `https://www.v2ex.com/api/replies/show.json?topic_id=${topicId}&page=${page}&page_size=${pageSize}`,
     cnode: `https://cnodejs.org/api/v1/topic/${topicId}`
@@ -48,7 +48,7 @@ function filterRepliesURL (topicId, page, pageSize) {
 }
 
 function filterRepliesData (res) {
-  let type = wx.getStorageSync('data_type') || 'cnode';
+  let type = wx.getStorageSync('data_type') || 'v2ex';
 
   if (type === 'cnode') {
     return {
@@ -70,7 +70,7 @@ function filterRepliesData (res) {
 }
 
 function filterHomeURL (node) {
-  let type = wx.getStorageSync('data_type') || 'cnode';
+  let type = wx.getStorageSync('data_type') || 'v2ex';
 
   let map = {
     v2ex: {
@@ -90,7 +90,7 @@ function filterHomeURL (node) {
 }
 
 function filterHomeData (res) {
-  let type = wx.getStorageSync('data_type') || 'cnode';
+  let type = wx.getStorageSync('data_type') || 'v2ex';
   if (type === 'cnode') {
     res.data.data = res.data.data.map((item) => {
       item.member = item.author;
@@ -114,7 +114,7 @@ function filterHomeData (res) {
 }
 
 function filterNodeURL (nodeId) {
-  let type = wx.getStorageSync('data_type') || 'cnode';
+  let type = wx.getStorageSync('data_type') || 'v2ex';
   let map = {
     v2ex: `https://www.v2ex.com/api/topics/show.json?node_id=${nodeId}`,
     cnode: `https://cnodejs.org/api/v1/topics?tab=${nodeId}`
@@ -123,7 +123,7 @@ function filterNodeURL (nodeId) {
 }
 
 function filterUserURL (username) {
-  let type = wx.getStorageSync('data_type') || 'cnode';
+  let type = wx.getStorageSync('data_type') || 'v2ex';
   let map = {
     v2ex: `https://www.v2ex.com/api/members/show.json?username=${username}`,
     cnode:  `https://cnodejs.org/api/v1/user/${username}`
@@ -132,7 +132,7 @@ function filterUserURL (username) {
 }
 
 function filterUserData (res) {
-  let type = wx.getStorageSync('data_type') || 'cnode';
+  let type = wx.getStorageSync('data_type') || 'v2ex';
 
   if (type === 'cnode') {
     res.data.data.avatar_mini = res.data.data.avatar_url;
@@ -147,7 +147,7 @@ function filterUserData (res) {
 }
 
 function filterRepliesByUsernameURL (username) {
-  let type = wx.getStorageSync('data_type') || 'cnode';
+  let type = wx.getStorageSync('data_type') || 'v2ex';
   let map = {
     v2ex: `https://www.v2ex.com/api/topics/show.json?username=${username}`,
     cnode: `https://cnodejs.org/api/v1/user/${username}`
@@ -156,7 +156,7 @@ function filterRepliesByUsernameURL (username) {
 }
 
 function filterRepliesByUsernameData (res) {
-  let type = wx.getStorageSync('data_type') || 'cnode';
+  let type = wx.getStorageSync('data_type') || 'v2ex';
   if (type === 'cnode') {
     return {
       data: res.data.data.recent_replies.map((item, index) => {

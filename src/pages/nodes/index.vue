@@ -43,7 +43,7 @@ export default {
   name: 'Nodes',
   data () {
       return {
-          type: wx.getStorageSync('data_type') || 'cnode',
+          type: wx.getStorageSync('data_type') || 'v2ex',
           query: '',
           backup: [],
           nodes: [],

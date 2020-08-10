@@ -13,7 +13,7 @@
       <view class='topic-title'>
         {{ topic.title }}
       </view>
-      <view class='topic-creator border-bottom'>
+      <view class='topic-creator border-bottom' @tap='gotoUser(topic.member.username)'>
         By {{ topic.member.username }} at {{ topic.last_modified_str }}
       </view>
       <view class='rich-text'>
@@ -40,7 +40,7 @@
           </view>
           <view class='middle-wrapper'>
             <view class='flex'>
-              <view class='user-wrapper'>{{ reply.member.username }}</view>
+              <view class='user-wrapper' @tap='gotoUser(reply.member.username)'>{{ reply.member.username }}</view>
               <view class='last-reply-wrapper'>{{ reply.last_modified_str }}</view>
             </view>
             <view class='rich-text'>
@@ -110,6 +110,9 @@ export default {
     },
     gotoNode (nodeId) {
       this.$utils.router.gotoNode(nodeId);
+    },
+    gotoUser (username) {
+      this.$utils.router.gotoUser(username);
     },
 
     prev () {

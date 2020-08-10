@@ -1,5 +1,5 @@
 export default function getData () {
-  let type = wx.getStorageSync('data_type') || 'cnode';
+  let type = wx.getStorageSync('data_type') || 'v2ex';
   if (type === 'cnode') {
     return [
       {
