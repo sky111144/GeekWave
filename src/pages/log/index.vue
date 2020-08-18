@@ -1,6 +1,11 @@
 <template>
   <view class='log-wrapper'>
     <view class='log-item-wrapper flex'>
+      2020-08-17：保持合规性，去掉分享功能。
+      <view class="grey">（v1.0.5）</view>
+    </view>
+    
+    <view class='log-item-wrapper flex'>
       2020-08-09：支持 CNode 数据源。
       <view class="grey">（v1.0.4）</view>
     </view>
