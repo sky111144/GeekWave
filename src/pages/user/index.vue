@@ -52,13 +52,6 @@ export default {
     }
   },
 
-  onShareAppMessage (res) {
-    return {
-      title: 'IT 新鲜事儿',
-      path: '/pages/home/index'
-    }
-  },
-
   mounted () {
     let page = Taro.getCurrentPages().slice(-1)[0] || { options: {} };
     this.getUserInfo(page.options.username);
