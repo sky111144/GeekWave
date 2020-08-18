@@ -54,13 +54,6 @@ export default {
     }
   },
 
-  onShareAppMessage (res) {
-    return {
-      title: 'IT 新鲜事儿',
-      path: '/pages/home/index'
-    }
-  },
-
   mounted () {
     this.getTopics(this.nodes[0].nodes[0]);
   },
